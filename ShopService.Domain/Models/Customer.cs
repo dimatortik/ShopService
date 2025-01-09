@@ -9,11 +9,13 @@ public sealed class Customer
     public static readonly DateOnly MaxBirthDate = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-18));
     
     private readonly List<Purchase> _purchases = [];
+
+    private Customer()
+    { }
     
-    private Customer(string firstName, string lastName, DateOnly birthDate)
+    private Customer(DateOnly birthDate)
     {
         Id = Guid.NewGuid();
-        FullName = FullName.Create(firstName, lastName);
         BirthDate = birthDate;
         CreatedAt = DateTime.UtcNow;
     }
@@ -25,20 +27,25 @@ public sealed class Customer
 
     public IReadOnlyCollection<Purchase> Purchases => _purchases;
     
-    public static Result<Customer> Create(string firstName, string lastName, DateOnly birthDate)
+    public static Result<Customer> Create(string firstName, string lastName, string middleName,DateOnly birthDate)
     {
-        return Result.Success(new Customer(firstName, lastName, birthDate));
+        var fullNameResult = FullName.Create(firstName, lastName, middleName);
+        var customer = new Customer(birthDate)
+        {
+            FullName = fullNameResult
+        };
+        return Result.Success(customer);
     }
     
-    public Result AddPurchase(Guid customerId)
+    public Result<Purchase> AddPurchase()
     {
-        var result = Purchase.Create(customerId);
+        var result = Purchase.Create(Id);
         if (result.IsFailure)
         {
-            return Result.Failure(result.Error);
+            return Result.Failure<Purchase>(result.Error);
         }
         _purchases.Add(result.Value!);
-        return Result.Success();
+        return Result.Success(result.Value!);
     }
     
 }

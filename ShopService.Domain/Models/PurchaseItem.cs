@@ -10,15 +10,16 @@ public sealed class PurchaseItem
         Id = Guid.NewGuid();
         ProductId = productId;
         Quantity = quantity;
+        Amount = 0;
     }
 
     public Guid Id { get; private set; }
     public Guid ProductId { get; private set; }
     public int Quantity { get; private set; }
-    public decimal Amount { get; private set; } = 0;
+    public decimal Amount { get; private set; }
     public Product Product { get; set; }
 
-    public static Result<PurchaseItem> Create(Guid productId, int quantity)
+    public static Result<PurchaseItem> Create(Guid productId, int quantity, decimal price)
     {
         if (quantity <= 0)
         {
@@ -27,8 +28,8 @@ public sealed class PurchaseItem
                 "Quantity must be greater than zero"));
         }
         var item = new PurchaseItem(productId, quantity);
-        item.Amount = item.Product.Price * quantity;
-        
+        item.Amount = price * quantity;
         return Result.Success(item);
     }
+    
 }

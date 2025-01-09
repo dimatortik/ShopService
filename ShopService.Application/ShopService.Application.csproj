@@ -8,9 +8,11 @@
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="12.4.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ShopService.Infrastructure\ShopService.Infrastructure.csproj" />
       <ProjectReference Include="..\ShopService.Shared\ShopService.Shared.csproj" />
     </ItemGroup>
 

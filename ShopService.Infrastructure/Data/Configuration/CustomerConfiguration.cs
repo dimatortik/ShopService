@@ -21,6 +21,10 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
                 .HasColumnName("LastName")
                 .HasMaxLength(FullName.MaxLength)
                 .IsRequired();
+            y.Property(x => x.MiddleName)
+                .HasColumnName("MiddleName")
+                .HasMaxLength(FullName.MaxLength)
+                .IsRequired();
         });
         builder.Property(x => x.BirthDate)
             .HasColumnType("date")
@@ -28,7 +32,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
             .IsRequired();
 
         builder.Property(x => x.CreatedAt)
-            .HasColumnType("timestamp without time zone")
+            .HasColumnType("timestamp with time zone")
             .IsRequired();
 
         builder.HasMany(x => x.Purchases)

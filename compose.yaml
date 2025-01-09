@@ -1,0 +1,27 @@
+﻿services:
+  shopservice.webapi:
+    image: shopservice.webapi
+    build:
+      context: .
+      dockerfile: ShopService.WebApi/Dockerfile
+    ports:
+        - "5555:8080"
+    depends_on:
+      - shopservice.db
+      - shopservice.redis
+      
+  shopservice.db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: "postgres"        
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "ShopService"
+    ports:
+      - "5437:5432"
+    volumes:
+      - ./.containers/shopservice.db:/var/lib/postgresql/data
+  
+  shopservice.redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"

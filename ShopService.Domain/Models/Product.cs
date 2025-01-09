@@ -6,6 +6,9 @@ public sealed class Product
 {
     public const int TitleMaxLength = 100;
     public const int SkuMaxLength = 50;
+
+    private Product()
+    { }
     private Product(string name, decimal price, string sku, string category)
     {
         Id = Guid.NewGuid();

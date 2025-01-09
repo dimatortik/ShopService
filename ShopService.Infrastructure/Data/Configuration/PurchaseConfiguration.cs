@@ -11,7 +11,7 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
         builder.HasKey(x => x.Id);
         builder.HasIndex(x => x.CreatedAt);
         builder.Property(x => x.CreatedAt)
-            .HasColumnType("timestamp without time zone")
+            .HasColumnType("timestamp with time zone")
             .IsRequired();
         builder.Property(x => x.TotalAmount)
             .HasColumnType("numeric")

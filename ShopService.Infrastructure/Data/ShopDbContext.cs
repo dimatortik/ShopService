@@ -1,4 +1,3 @@
-using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using ShopService.Domain.Models;
 
@@ -16,7 +15,7 @@ public class ShopDbContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    { 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopDbContext).Assembly);
     }
 }

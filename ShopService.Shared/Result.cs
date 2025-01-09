@@ -1,7 +1,10 @@
+using Newtonsoft.Json;
+
 namespace ShopService.Shared;
 
 public class Result
 {
+    public Result() { }
     protected internal Result(bool isSuccess, Error error)
     {
         if (isSuccess && error != Error.None)
@@ -39,7 +42,7 @@ public class Result
 public class Result<TValue> : Result
 {
     private readonly TValue? _value;
-
+    [JsonConstructor]
     protected internal Result(TValue? value, bool isSuccess, Error error)
         : base(isSuccess, error) =>
         _value = value;

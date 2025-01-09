@@ -28,9 +28,9 @@ public sealed class Purchase
         return Result.Success(new Purchase(customerId));
     }
     
-    public Result AddItem(Guid productId, int quantity)
+    public Result AddItem(Guid productId, int quantity, decimal price)
     {
-        var result = PurchaseItem.Create(productId, quantity);
+        var result = PurchaseItem.Create(productId, quantity, price);
         if (result.IsFailure)
         {
             return Result.Failure(result.Error);
